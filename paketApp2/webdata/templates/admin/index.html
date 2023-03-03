@@ -1,0 +1,119 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block body %}
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Package (This Month)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{entered_month}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Claimed (This Month)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{claimed_month}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Entered (Today)
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{entered_today}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Claimed (Today)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{claimed_today}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-12 col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">User Menu</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 text-center">
+                        <a href="{{url_for('admin.adduser')}}" class="btn btn-success btn-icon-split">
+                            <span class="text">Add User</span>
+                        </a>
+                        <a href="{{url_for('admin.listuser')}}" class="btn btn-secondary btn-icon-split">
+                            <span class="text">User List</span>
+                        </a>
+                        <a href="#" class="btn btn-warning btn-icon-split">
+                            <span class="text">Update User</span>
+                        </a>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2 mt-2">
+    <div class="col-md-12 col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Packages Menu</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 text-center">
+                            <a href="{{url_for('admin.addpackage')}}" class="btn btn-success btn-icon-split">
+                                <span class="text">Add Package (Resi) </span>
+                            </a>
+                            <a href="{{url_for('admin.addpackagemanual')}}" class="btn btn-secondary btn-icon-split">
+                                <span class="text">Add Package (Manual) </span>
+                            </a>
+                            <a href="{{url_for('admin.listpackage')}}" class="btn btn-warning btn-icon-split">
+                                <span class="text">List Package</span>
+                            </a>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

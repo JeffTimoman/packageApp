@@ -1,0 +1,106 @@
+{% extends 'user/layout.html'%}
+{% block content %}DASHBOARD{% endblock content %}
+
+{% block body %}
+<div class="section full mt-2">
+    <!-- <div class="section-title">Profile</div> -->
+    <div class="wide-block pt-2 pb-2 mt-3">
+        <div class="card mb-3" style="max-width: 100vw;">
+            <div class="row g-0">
+              <div class="col-md-4 text-center">
+                <img src="/static/img/undraw_profile.svg" style="width : 70%; height : 70%;" class="img-fluid rounded-circle" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Profile</h5>
+                  <p class="card-text">
+                    <ul>
+                        <li>Name : {{current_user.first_name.title()}} {{current_user.last_name.title()}}</li>
+                        <li>Room : {{current_user.room}}</li>
+                        <li>Register : {{current_user.date_created.strftime('%Y-%m-%d')}}</li>
+                        <li>Package Claimed : {{current_user.package_claimed | length}}</li>
+                    </ul>
+                  </p>
+                  <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                </div>
+              </div>
+            </div>
+          </div>    
+    </div>
+</div> 
+<div class="section full mt-2">
+    <div class="section-title">Recent Packages</div>
+    <div class="wide-block pt-2 pb-2">
+        <div class="row">
+            <div class="col-4">
+                <span>Latest</span>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4 text-right">
+                <a href="{{url_for('user.packages')}}">
+                    <span class="">View All</span>
+                </a>
+            </div>
+        </div>
+        <hr>
+        <!-- loop produk -->
+
+        {% if packages %}
+        {% for package in packages %}
+        <div class="section mt-3 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-subtitle"></h6>
+                            <h5 class="card-title">{{ package.owner }}</h5>
+                            <p class="card-text">
+                                {{package.expedition}} : {{ package.awb }}
+                            </p>
+                            <p class="card-text">{{package.date_created}}</p>
+                            {% if package.receiver_id == None %}
+                                <a href="/user/claim/{{package.id}}" class="btn btn-primary">
+                                    <ion-icon name="cube-outline" role="img" class="md hydrated" aria-label="cube outline"></ion-icon>
+                                    Claim
+                                </a>
+                            {% else %}
+                                {% if current_user.id == package.receiver_id %}
+                                    <a href="/user/unclaim/{{package.id}}" class="btn btn-danger">
+                                        <ion-icon name="cube-outline" role="img" class="md hydrated" aria-label="cube outline"></ion-icon>
+                                        Unclaim
+                                    </a>
+                                {% else %}
+                                    <a href="#" class="btn btn-info">
+                                        <ion-icon name="cube-outline" role="img" class="md hydrated" aria-label="cube outline"></ion-icon>
+                                        Claimed
+                                    </a>   
+                                    <span class="card-text">
+                                        {{package.user.first_name[0:10]}}               
+                                    </span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+        {% else %}
+        <div class="section mt-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle"></h6>
+                    <h5 class="card-title">PAKET</h5>
+                    <p class="card-text">
+                        Reusable components designed for the mobile interface and ready to use.
+                    </p>
+                    <a href="app-components.html" class="btn btn-primary">
+                        <ion-icon name="cube-outline" role="img" class="md hydrated" aria-label="cube outline"></ion-icon>
+                        Preview
+                    </a>
+                </div>
+            </div>
+        </div>a
+        {% endif %}
+
+        
+    </div>
+</div>
+
+{% endblock body %}

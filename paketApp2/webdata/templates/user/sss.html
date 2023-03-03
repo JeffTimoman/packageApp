@@ -1,0 +1,52 @@
+
+<div class="container">
+    <div class="col">
+        <div class="row">
+                <div class="col-md-12 mt-3">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                          {% if messages %}
+                            {% for category, message in messages %}
+                              <div class="alert alert-{{ category }}">
+                                {{ message }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                        {% endwith %}
+                        <div class="text-end"> 
+                            <a href="{{url_for('main.logout')}}" class="btn btn-warning mb-2 me-md-2">Logout</a>
+                        </div>
+                </div>
+        </div>
+        <div class="row">
+            {% for package in packages %}
+            <div class="col-md-4 mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{package.owner}}</h5>
+                        <p class="card-text">{{package.awb}}</p>
+                        {% if current_user.user_type == 0 %}
+                            {% if package.receiver_id %}
+                                 <a href="/user/unclaim/{{package.id}}" class="btn btn-danger">Unclaim</a>
+                            {% else %}
+                                <a href="/user/claim/{{package.id}}" class="btn btn-primary">Claim</a>
+                            {% endif %}
+                        {% else %}
+                            {% if package.receiver_id %}
+                                {% if package.receiver_id == current_user.id %}
+                                    <a href="/user/unclaim/{{package.id}}" class="btn btn-danger">Unclaim</a>
+                                {% else %}
+
+                                    <a href="#" class="btn btn-info" disabled>Claimed</a>
+                                {% endif %}
+                            {% else %}
+                                <a href="/user/claim/{{package.id}}" class="btn btn-primary">Claim</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+

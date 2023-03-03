@@ -1,0 +1,42 @@
+                <!-- package_owner -->
+                <div class="form-group">
+                    {{ form.package_owner.label(class="form=control-label")}}
+                    {% if form.package_owner.errors %}
+                        {{ form.package_owner(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.package_owner.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.package_owner(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <!-- package_awb -->
+                <div class="form-group">
+                    {{ form.package_awb.label(class="form=control-label")}}
+                    {% if form.package_awb.errors %}
+                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.package_awv.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                       </div>
+                    {% else %}
+                        {{ form.package_awb(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <!-- package_expedition -->
+                <div class="form-group">
+                    {{ form.package_expedition.label(class="form=control-label")}}
+                    {% if form.package_expedition.errors %}
+                        {{ form.package_expedition(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.package_expedition.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.package_expedition(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>

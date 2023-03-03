@@ -1,0 +1,54 @@
+{% extends 'admin/layout.html'%}
+
+{% block title %}Add Package{% endblock title %}
+{% block body %}
+
+<div class="col-md-12 mt-6">
+    <div class="content-section card">
+        <div class="" style="padding: 4%;">
+            <a href="{{url_for('admin.index')}}" class="btn btn-warning mb-2">Back</a>
+            <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                    Add Package
+                </legend>
+            <!-- package_owner -->
+        <!-- package_awb -->
+        <div class="form-group">
+            {{ form.package_awb.label(class="form=control-label")}}
+            {% if form.package_awb.errors %}
+                {{ form.package_awb(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.package_awb.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.package_awb(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+            <!-- package_expedition -->
+                {{ form.package_expedition.label(class="form=control-label")}}
+                {{ form.csrf_token}}
+                {% if form.package_expedition.errors %}
+                    {{ form.package_expedition(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.package_expedition.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.package_expedition(class="form-select form-select-lg") }}
+                {% endif %}
+                </fieldset>
+                <div class="form-group mt-3">
+                    <div class="d-grip gap-2 col-12">
+                        {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+                    </div>
+                </div>
+                </form>
+            </div>   
+    </div>
+</div>
+{% endblock body%}

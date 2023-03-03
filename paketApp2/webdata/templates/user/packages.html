@@ -1,0 +1,114 @@
+{% extends 'user/layout.html' %}
+{% block content %}PACKAGES{% endblock content %}
+{% block body %}
+    <div class="section full mt-2 container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <h2 class="text-center col-12">
+                        Tanggal
+                    </h2>
+                    <input type="date" name="" id="" class="ml-2 mr-2 form form-control" value="2022-07-22" disabled>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <h2 class="text-center col-12">
+                        Cari
+                    </h2>
+                    <input type="text" autofocus oninput="feeddata()" id="inp" class="ml-2 mr-2 form form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="section mt-2" id="tag">
+            <hr>
+            <!-- item -->
+            {% for package in packages %}
+            <div class="card cart-item mb-2">
+                <div class="card-body">
+                    <div class="in">
+                        <div class="text">
+                            <h3 class="title">{{package.owner}}</h3>
+                            <p class="detail">{{package.awb}}</p>
+                            <strong class="price">{{package.expedition}}</strong>
+                        </div>
+                    </div>
+                    {% if package.receiver_id == None %}
+                        <div class="cart-item-footer">
+                            <a href="/user/claim2/{{package.id}}" class="ml-2 btn btn-outline-secondary btn-sm btn-secondary">Claim</a>
+                        </div>
+                    {% else %}
+                        {% if package.receiver_id == current_user.id %}
+                        <div class="cart-item-footer">
+                            <a href="/user/unclaim2/{{package.id}}" class="ml-2 btn btn-outline-danger btn-sm btn-danger">Unclaim</a>
+                        </div>
+                        {% else %}
+                        <div class="cart-item-footer">
+                            <a href="#" class="ml-2 btn btn-outline-secondary btn-sm btn-secondary">Claimed</a>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <!-- * item -->
+            {% endfor %}
+        </div>
+    <script>
+        function corta(data) {
+            console.log(tag)
+            var htm=''
+            data.forEach(tag => {
+                console.log(tag)
+                var pot=""
+                if(tag.receiver_id == {{current_user.id}}){
+                    pot=`<div class="cart-item-footer">
+                                <a href="/user/unclaim2/${tag.id}" class="ml-2 btn btn-outline-secondary btn-sm btn-danger">Unclaim</a>
+                            </div>`
+                }else if (tag.receiver_id!=null) {
+                    pot=`<div class="cart-item-footer">
+                                <a href=#" class="ml-2 btn btn-outline-info btn-sm btn-infor">Claimed</a>
+                            </div>`
+                }else{
+                    pot=`<div class="cart-item-footer">
+                                <a href="/user/claim2/${tag.id}" class="ml-2 btn btn-outline-secondary btn-sm btn-secondary">Claim</a>
+                            </div>`
+                }
+                htm+=`
+                    <div class="card cart-item mb-2">
+                        <div class="card-body">
+                            <div class="in">
+                                <div class="text">
+                                    <h3 class="title">${tag.owner}</h3>
+                                    <p class="detail">${tag.awb}</p>
+                                    <strong class="price">${tag.expedition}</strong>
+                                </div>
+                            </div>
+                            ${pot}
+                        </div>
+                    </div>
+                    `
+            });
+            document.getElementById("tag").innerHTML=htm
+        }
+
+        function feeddata(pin){
+            if (p=='') {
+                p=''
+            }
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+            var p=document.getElementById("inp").value;
+            fetch("{{url_for('api.get_package_json_pin')}}"+p, requestOptions)
+            .then(response => response.json())
+            .then(
+                result => corta(result)
+                )
+            .catch(error => console.log('error', error));
+        }
+        feeddata()
+
+    </script>
+    {% endblock body %}
